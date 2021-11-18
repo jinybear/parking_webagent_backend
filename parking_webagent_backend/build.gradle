@@ -1,3 +1,4 @@
+
 plugins {
 	id 'org.springframework.boot' version '2.5.6'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -5,7 +6,7 @@ plugins {
 }
 
 group = 'Nuricon'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.1.0.0000'
 sourceCompatibility = '11'
 
 configurations {
@@ -14,17 +15,42 @@ configurations {
 	}
 }
 
+// WAR 빌드 필요시 사용하며 빌드 방법은 CLI 에서 "gradlew.bat bootWar" 실행
+//apply plugin:'war'
+//bootWar{
+//	archiveBaseName="test-api"
+//	archiveFileName="test-api.war"
+//	archiveVersion="0.0.0"
+//}
+
 repositories {
 	mavenCentral()
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
+	implementation 'org.mariadb.jdbc:mariadb-java-client'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation 'io.springfox:springfox-swagger2'
-	implementation 'io.springfox:springfox-swagger-ui'
+	compileOnly 'org.projectlombok:lombok'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+	implementation 'org.springframework.boot:spring-boot-starter-integration'
+	implementation 'org.springframework.integration:spring-integration-mqtt'
+
+
+
+	// WAR 배포 사용 할 경우 활성화
+	//implementation 'org.springframework.boot:spring-boot-starter-tomcat'
+
+
 }
 
 test {
