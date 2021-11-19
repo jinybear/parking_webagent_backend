@@ -25,5 +25,6 @@ spring:
       authentication-database: parkingflex
       username: parkingflex
       password: tkaqorclf
+
   profiles:
     active: local

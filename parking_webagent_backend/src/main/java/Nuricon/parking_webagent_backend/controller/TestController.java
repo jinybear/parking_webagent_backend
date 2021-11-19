@@ -17,7 +17,7 @@ public class TestController {
     private EventService es;
 
     @Autowired
-    private MqttConfig.MqttOrderGateway mqttOrderGateway;
+    //private MqttConfig.MqttOrderGateway mqttOrderGateway;
 
     @GetMapping("/test_getMongoData")
     public HourSummary getTest()
@@ -31,6 +31,6 @@ public class TestController {
     public void sendToMqtt(String message, String topic)
     {
         // 요청 수신시 대상 mqtt broker에게 메시지 전송 테스트
-        mqttOrderGateway.sendToMqtt(message, topic);
+        //mqttOrderGateway.sendToMqtt(message, topic);
     }
 }
