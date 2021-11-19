@@ -1,10 +1,10 @@
 package Nuricon.parking_webagent_backend;
 
+import Nuricon.parking_webagent_backend.util.mqtt.MqttClientAdapter;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 //@SpringBootApplication
 //public class ParkingWebagentBackendApplication extends SpringBootServletInitializer {
@@ -19,8 +19,20 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 //}
 
 @SpringBootApplication
-public class ParkingWebagentBackendApplication {
-	public static void main(String[] args) {
+public class ParkingWebagentBackendApplication implements ApplicationRunner {
+
+//	@Autowired
+//	private MqttGenerator gen;
+
+	@Override
+	public void run(ApplicationArguments args) throws Exception {
+		var t = new MqttClientAdapter("tcp://192.168.0.250:1883", "/average/#");
+		var t1 = new MqttClientAdapter("tcp://192.168.0.203:1883", "/average/#");
+	}
+
+	public static void main(String[] args){
 		SpringApplication.run(ParkingWebagentBackendApplication.class, args);
 	}
+
+
 }
