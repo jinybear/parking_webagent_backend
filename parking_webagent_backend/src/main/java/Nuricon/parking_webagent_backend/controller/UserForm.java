@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserForm {
-    private String name;
+    private String id;
     private String password;
 }

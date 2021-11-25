@@ -26,8 +26,8 @@ public class ParkingWebagentBackendApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		var t = new MqttClientAdapter("tcp://192.168.0.250:1883", "/average/#");
-		var t1 = new MqttClientAdapter("tcp://192.168.0.203:1883", "/average/#");
+//		var t = new MqttClientAdapter("tcp://192.168.0.250:1883", "/average/#");
+//		var t1 = new MqttClientAdapter("tcp://192.168.0.203:1883", "/average/#");
 	}
 
 	public static void main(String[] args){
