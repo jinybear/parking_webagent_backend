@@ -8,6 +8,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -29,13 +31,14 @@ public class JwtFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         String token = null;
-        String userName = null;
+        String user_id = null;
+
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             token = authorizationHeader.substring(7);
-            userName = jwtUtil.extractName(token);
+            user_id = jwtUtil.extractName(token);
         }
-        if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userService.loadUserByUsername(userName);
+        if (user_id != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = userService.loadUserByUsername(user_id);
             if (jwtUtil.validateToken(token, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
@@ -44,6 +47,12 @@ public class JwtFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
+
+//        if ("OPTIONS".equalsIgnoreCase(httpServletRequest.getMethod())) {
+//            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+//        } else {
+//            filterChain.doFilter(httpServletRequest, httpServletResponse);
+//        }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }
