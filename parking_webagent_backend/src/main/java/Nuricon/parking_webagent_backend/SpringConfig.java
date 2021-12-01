@@ -2,6 +2,7 @@ package Nuricon.parking_webagent_backend;
 
 import Nuricon.parking_webagent_backend.filter.JwtFilter;
 import Nuricon.parking_webagent_backend.service.UserService;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 
 @Configuration
@@ -46,8 +49,9 @@ public class SpringConfig extends WebSecurityConfigurerAdapter {
     // ref : https://oddpoet.net/blog/2017/04/27/cors-with-spring-security/
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/", "/user/login", "/test")
-                .permitAll().requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+        http.csrf().disable().authorizeRequests().antMatchers("/", "/user/add", "/user/login").permitAll()
+                .antMatchers("/systems/**").hasAnyRole("SUPERADMIN")
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .anyRequest().authenticated()
                 .and().cors()
                 .and().exceptionHandling().and().sessionManagement()
@@ -64,6 +68,7 @@ public class SpringConfig extends WebSecurityConfigurerAdapter {
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
+        configuration.setExposedHeaders(Arrays.asList("access-token", "refresh-token"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
@@ -80,8 +85,7 @@ public class SpringConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-ui.html",
                 "/webjars/**",
                 "/v3/api-docs",
-                "/swagger-ui/**",
-                "/sendToMqtt"
+                "/swagger-ui/**"
                 );
     }
 

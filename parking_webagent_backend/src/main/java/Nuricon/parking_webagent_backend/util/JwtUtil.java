@@ -36,14 +36,27 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(String username) {
+    public Map<String, String> generateTokens(String username) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username);
+
+        Map<String, String> res = new HashMap<>();
+        res.put("access-token", createToken(claims, username, 1000 * 60 * 30)); // 30 min
+        res.put("refresh-token", createToken(claims, username, 1000 * 60 * 60 * 24 * 7));  // 1 week
+
+        return res;
     }
 
-    private String createToken(Map<String, Object> claims, String subject) {
+    public String generateToken(String username) {
+        Map<String, Object> claims = new HashMap<>();
+        String res = createToken(claims, username, 1000 * 60 * 60 * 10);  // 10 hours
+
+        return res;
+    }
+
+    private String createToken(Map<String, Object> claims, String subject, int expiredTime) {
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .setExpiration(new Date(System.currentTimeMillis() + expiredTime))
+                //.setExpiration(new Date(System.currentTimeMillis() + 10000))
                 .signWith(SignatureAlgorithm.HS256, secret).compact();
     }
 

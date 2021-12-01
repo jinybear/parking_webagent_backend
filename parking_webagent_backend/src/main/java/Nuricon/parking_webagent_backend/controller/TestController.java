@@ -20,8 +20,7 @@ public class TestController {
     @Autowired
     private EventService es;
 
-    //@Autowired
-    //private MqttConfig.MqttOrderGateway mqttOrderGateway;
+
 
     @Autowired
     private ParkingCustomRepository parkingCustomRepository;

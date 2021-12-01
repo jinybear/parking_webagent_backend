@@ -8,8 +8,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -17,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
@@ -31,14 +30,16 @@ public class JwtFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         String token = null;
-        String user_id = null;
+        String userId = null;
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             token = authorizationHeader.substring(7);
-            user_id = jwtUtil.extractName(token);
+            userId = jwtUtil.extractName(token);
         }
-        if (user_id != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userService.loadUserByUsername(user_id);
+
+        if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = userService.loadUserByUsername(userId);
+
             if (jwtUtil.validateToken(token, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
@@ -48,11 +49,6 @@ public class JwtFilter extends OncePerRequestFilter {
             }
         }
 
-//        if ("OPTIONS".equalsIgnoreCase(httpServletRequest.getMethod())) {
-//            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-//        } else {
-//            filterChain.doFilter(httpServletRequest, httpServletResponse);
-//        }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }
