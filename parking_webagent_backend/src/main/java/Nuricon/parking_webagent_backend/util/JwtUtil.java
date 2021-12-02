@@ -46,9 +46,9 @@ public class JwtUtil {
         return res;
     }
 
-    public String generateToken(String username) {
+    public String generateToken(String userId) {
         Map<String, Object> claims = new HashMap<>();
-        String res = createToken(claims, username, 1000 * 60 * 60 * 10);  // 10 hours
+        String res = createToken(claims, userId, 1000 * 60 * 60 * 10);  // 10 hours
 
         return res;
     }
