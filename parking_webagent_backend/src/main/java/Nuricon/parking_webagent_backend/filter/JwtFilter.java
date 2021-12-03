@@ -46,6 +46,8 @@ public class JwtFilter extends OncePerRequestFilter {
                 usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            } else if(jwtUtil.isTokenExpired(token)){
+                httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "This token is not valid");
             }
         }
 

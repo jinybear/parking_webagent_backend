@@ -1,6 +1,8 @@
 package Nuricon.parking_webagent_backend.service;
 
+import Nuricon.parking_webagent_backend.domain.RefreshToken;
 import Nuricon.parking_webagent_backend.domain.User;
+import Nuricon.parking_webagent_backend.repository.RefreshTokenRepository;
 import Nuricon.parking_webagent_backend.repository.UserRepository;
 import Nuricon.parking_webagent_backend.util.enums.Role;
 import javassist.NotFoundException;
@@ -23,6 +25,8 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepo;
+    @Autowired
+    private RefreshTokenRepository refreshTokenRepository;
     @Autowired
     private MessageSource messageSource;
     @Autowired
@@ -65,6 +69,20 @@ public class UserService implements UserDetailsService {
         String encodedPassword = this.pe.encode(user.getPassword());
         user.setPassword(encodedPassword);
         userRepo.saveAndFlush(user);
+    }
+
+    public void updateRefreshToken(String userId, String token){
+        User user = getUser(userId);
+        RefreshToken rf = user.getRefreshToken();
+        if (rf == null){
+            // 먼저 RefreshToken table 에 추가 후 user에 추가해야 함.
+            rf = new RefreshToken(token);
+            refreshTokenRepository.saveAndFlush(rf);
+            user.setRefreshToken(rf);
+        } else {
+            rf.setToken(token);
+        }
+
     }
 
     // User의 failureCnt column의 값을 증가시키고 특정 값 이상이면 locked column을 true로 전환하는 함수(실패횟수 카운트해서 잠금처리용)
