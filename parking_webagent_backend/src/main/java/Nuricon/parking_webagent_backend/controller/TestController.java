@@ -1,6 +1,5 @@
 package Nuricon.parking_webagent_backend.controller;
 
-import Nuricon.parking_webagent_backend.MqttConfig;
 import Nuricon.parking_webagent_backend.domain.HourSummary;
 import Nuricon.parking_webagent_backend.domain.parking.ParkingArea;
 import Nuricon.parking_webagent_backend.repository.ParkingCustomRepository;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class TestController {
