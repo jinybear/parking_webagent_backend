@@ -2,6 +2,7 @@ package Nuricon.parking_webagent_backend.filter;
 
 import Nuricon.parking_webagent_backend.service.UserService;
 import Nuricon.parking_webagent_backend.util.JwtUtil;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,8 +47,6 @@ public class JwtFilter extends OncePerRequestFilter {
                 usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            } else if(jwtUtil.isTokenExpired(token)){
-                httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "This token is not valid");
             }
         }
 

@@ -1,12 +1,12 @@
 package Nuricon.parking_webagent_backend.controller;
 
-import Nuricon.parking_webagent_backend.domain.RefreshToken;
 import Nuricon.parking_webagent_backend.domain.User;
 import Nuricon.parking_webagent_backend.service.UserService;
 import Nuricon.parking_webagent_backend.util.JwtUtil;
 import Nuricon.parking_webagent_backend.util.enums.Role;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 import java.util.Map;
@@ -48,9 +48,8 @@ public class UserController {
     @ResponseBody
     public String refreshToken(HttpServletResponse response, @RequestBody TokenForm data) throws JsonProcessingException {
         try {
+            // 만약 refresh token 기간이 만료전으로 유효하면
             String userId = jwtUtil.extractName(data.getToken());
-            UserDetails user = userService.loadUserByUsername(userId);
-
             Map<String, String> tokens = jwtUtil.generateTokens(userId, 1000*60*30);
             String token = new ObjectMapper().writeValueAsString(tokens);
             userService.updateRefreshToken(userId, tokens.get("refresh-token"));
@@ -59,6 +58,9 @@ public class UserController {
 
         } catch (NoSuchElementException ex){
             response.setStatus(404);
+            return "Failed to process request";
+        } catch (Exception ex) {
+            response.setStatus(401);
             return "Failed to process request";
         }
     }
@@ -84,7 +86,7 @@ public class UserController {
                 new UsernamePasswordAuthenticationToken(userId, form.getPassword())
         );
 
-        Map<String, String> tokens = jwtUtil.generateTokens(userId, 1000);
+        Map<String, String> tokens = jwtUtil.generateTokens(userId, 1000 * 60 * 10);  // 10min
         String token = new ObjectMapper().writeValueAsString(tokens);
         userService.updateRefreshToken(userId, tokens.get("refresh-token"));
 
@@ -93,7 +95,16 @@ public class UserController {
 
     @PostMapping("/user/logout")
     @ResponseBody
-    public String logout(HttpServletResponse response) {
+    public String logout(HttpServletRequest httpServletRequest) {
+        // refreshToken 제거
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String token = authorizationHeader.substring(7);
+            String userId = jwtUtil.extractName(token);
+
+            userService.logout(userId);
+        }
+
         return "OK";
     }
 }

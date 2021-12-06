@@ -5,6 +5,7 @@ import Nuricon.parking_webagent_backend.domain.User;
 import Nuricon.parking_webagent_backend.repository.RefreshTokenRepository;
 import Nuricon.parking_webagent_backend.repository.UserRepository;
 import Nuricon.parking_webagent_backend.util.enums.Role;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -16,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
+import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -71,7 +74,7 @@ public class UserService implements UserDetailsService {
         userRepo.saveAndFlush(user);
     }
 
-    public void updateRefreshToken(String userId, String token){
+    public void updateRefreshToken(String userId, String token) {
         User user = getUser(userId);
         RefreshToken rf = user.getRefreshToken();
         if (rf == null){
@@ -79,10 +82,21 @@ public class UserService implements UserDetailsService {
             rf = new RefreshToken(token);
             refreshTokenRepository.saveAndFlush(rf);
             user.setRefreshToken(rf);
+            //userRepo.save(user);
         } else {
+            rf.setUpdatedAt(LocalDateTime.now());
             rf.setToken(token);
+            //refreshTokenRepository.save(rf);
         }
+    }
 
+    public void logout(String userId){
+        User user = getUser(userId);
+        RefreshToken rf = user.getRefreshToken();
+        if (rf != null) {
+            rf.setToken("");
+            rf.setUpdatedAt(LocalDateTime.now());
+        }
     }
 
     // User의 failureCnt column의 값을 증가시키고 특정 값 이상이면 locked column을 true로 전환하는 함수(실패횟수 카운트해서 잠금처리용)
