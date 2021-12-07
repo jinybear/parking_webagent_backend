@@ -17,9 +17,9 @@ import java.util.Collection;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="users")
+@Table(name="user")
 public class User implements UserDetails {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String password;
@@ -36,6 +36,10 @@ public class User implements UserDetails {
     private Integer failurecnt;
     private boolean locked;
 
+    @OneToOne
+    @JoinColumn(name="refreshtoken_id")
+    private RefreshToken refreshToken;
+
     public User(String userid, String password, Role role){
         this.password = password;
         this.userid = userid;
@@ -43,8 +47,6 @@ public class User implements UserDetails {
         this.createdat = LocalDateTime.now();
         this.failurecnt = 0;
         this.locked = false;
-
-
     }
 
     @Override

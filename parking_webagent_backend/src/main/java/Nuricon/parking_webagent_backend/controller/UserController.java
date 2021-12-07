@@ -6,29 +6,22 @@ import Nuricon.parking_webagent_backend.util.JwtUtil;
 import Nuricon.parking_webagent_backend.util.enums.Role;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import io.swagger.annotations.Api;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.swagger.annotations.ApiOperation;
-import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.json.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -51,6 +44,27 @@ public class UserController {
         return user;
     }
 
+    @PostMapping("/user/refresh")
+    @ResponseBody
+    public String refreshToken(HttpServletResponse response, @RequestBody TokenForm data) throws JsonProcessingException {
+        try {
+            // 만약 refresh token 기간이 만료전으로 유효하면
+            String userId = jwtUtil.extractName(data.getToken());
+            Map<String, String> tokens = jwtUtil.generateTokens(userId, 1000*60*30);
+            String token = new ObjectMapper().writeValueAsString(tokens);
+            userService.updateRefreshToken(userId, tokens.get("refresh-token"));
+
+            return token;
+
+        } catch (NoSuchElementException ex){
+            response.setStatus(404);
+            return "Failed to process request";
+        } catch (Exception ex) {
+            response.setStatus(401);
+            return "Failed to process request";
+        }
+    }
+
     @PostMapping("/user/login")
     @ResponseBody
     public String login(HttpServletResponse response, @RequestBody UserForm form) throws JsonProcessingException {
@@ -64,7 +78,7 @@ public class UserController {
             String notExistId = messageSource.getMessage("error.NotExistID", null, Locale.KOREA);
             return notExistId;
         } catch(IllegalAccessException ex){
-            response.setStatus(403);
+            response.setStatus(404);
             return ex.getMessage();
         }
 
@@ -72,30 +86,24 @@ public class UserController {
                 new UsernamePasswordAuthenticationToken(userId, form.getPassword())
         );
 
-//        Cookie myCookie = new Cookie("Authorization", token);
-//        myCookie.setMaxAge(1000 * 60 * 60 * 10);
-//        response.addCookie(myCookie);
+        Map<String, String> tokens = jwtUtil.generateTokens(userId, 1000 * 60 * 10);  // 10min
+        String token = new ObjectMapper().writeValueAsString(tokens);
+        userService.updateRefreshToken(userId, tokens.get("refresh-token"));
 
-//        Map<String, String> tokens = jwtUtil.generateToken(userId);
-//        String json = new ObjectMapper().writeValueAsString(tokens);
-//
-//        response.addHeader("access-token", tokens.get("access-token"));
-//        response.addHeader("refresh-token", tokens.get("refresh-token"));
-
-//        return tokens.get("access-token");
-
-        String token = jwtUtil.generateToken(userId);
         return token;
     }
 
     @PostMapping("/user/logout")
     @ResponseBody
-    public String logout(HttpServletResponse response) {
-//        Cookie myCookie = new Cookie("Authorization", null);
-//        myCookie.setMaxAge(0);
-//        myCookie.setPath("/");
+    public String logout(HttpServletRequest httpServletRequest) {
+        // refreshToken 제거
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String token = authorizationHeader.substring(7);
+            String userId = jwtUtil.extractName(token);
 
-        //response.addCookie(myCookie);
+            userService.logout(userId);
+        }
 
         return "OK";
     }
@@ -108,4 +116,9 @@ public class UserController {
 class UserForm {
     private String id;
     private String password;
+}
+
+@Data
+class TokenForm {
+    private String token;
 }

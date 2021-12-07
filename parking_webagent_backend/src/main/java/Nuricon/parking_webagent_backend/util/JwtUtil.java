@@ -32,23 +32,23 @@ public class JwtUtil {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 
-    private Boolean isTokenExpired(String token) {
+    public Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    public Map<String, String> generateTokens(String username) {
+    public Map<String, String> generateTokens(String userId, int expired) {
         Map<String, Object> claims = new HashMap<>();
 
         Map<String, String> res = new HashMap<>();
-        res.put("access-token", createToken(claims, username, 1000 * 60 * 30)); // 30 min
-        res.put("refresh-token", createToken(claims, username, 1000 * 60 * 60 * 24 * 7));  // 1 week
+        res.put("access-token", createToken(claims, userId, expired)); // 30 min
+        res.put("refresh-token", createToken(claims, userId, 1000 * 60 * 60 * 24 * 7));  // 1 week
 
         return res;
     }
 
-    public String generateToken(String username) {
+    public String generateToken(String userId) {
         Map<String, Object> claims = new HashMap<>();
-        String res = createToken(claims, username, 1000 * 60 * 60 * 10);  // 10 hours
+        String res = createToken(claims, userId, 1000 * 60 * 60 * 10);  // 10 hours
 
         return res;
     }
