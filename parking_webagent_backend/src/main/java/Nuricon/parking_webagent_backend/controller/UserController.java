@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.Clock;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -40,8 +42,19 @@ public class UserController {
     public User account(@RequestBody UserForm form){
         User user = new User(form.getId(), form.getPassword(), Role.ROLE_ADMIN);
         this.userService.registUser(user);
+        System.out.println("폼 날라왔당"+form.getId());
 
         return user;
+    }
+
+    @ApiOperation(value="This method is used to get accounts")
+    @PostMapping("/user/getAccountList")
+    public List<User> getAccountList(){
+        List<User> users=this.userService.getUserList();
+
+        System.out.println(users);
+
+        return null;
     }
 
     @PostMapping("/user/refresh")
@@ -64,6 +77,7 @@ public class UserController {
             return "Failed to process request";
         }
     }
+
 
     @PostMapping("/user/login")
     @ResponseBody

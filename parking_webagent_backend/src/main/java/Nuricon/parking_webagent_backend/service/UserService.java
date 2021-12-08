@@ -18,10 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
-import java.util.Locale;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Transactional
 @Service
@@ -71,7 +68,11 @@ public class UserService implements UserDetailsService {
     public void registUser(User user){
         String encodedPassword = this.pe.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        userRepo.saveAndFlush(user);
+        userRepo.save(user);
+    }
+
+    public List<User> getUserList(){
+        return userRepo.findAll();
     }
 
     public void updateRefreshToken(String userId, String token) {
