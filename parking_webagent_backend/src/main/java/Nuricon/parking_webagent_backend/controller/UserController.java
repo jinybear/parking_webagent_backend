@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.Clock;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @RestController
 public class UserController {
@@ -42,8 +39,6 @@ public class UserController {
     public User account(@RequestBody UserForm form){
         User user = new User(form.getId(), form.getPassword(), Role.ROLE_ADMIN);
         this.userService.registUser(user);
-        System.out.println("폼 날라왔당"+form.getId());
-
         return user;
     }
 
@@ -51,12 +46,16 @@ public class UserController {
     @PostMapping("/user/getAccountList")
     public List<User> getAccountList(){
         List<User> users=this.userService.getUserList();
-
         System.out.println(users);
-
-        return null;
+        return users;
     }
-
+    @ApiOperation(value="This method is used to delete accounts")
+    @PostMapping("/user/deleteAccount")
+    public void deleteAccount(@RequestBody Map<String, Object> params){
+        List<String> ids= (List<String>) params.get("ids");
+        System.out.println(ids);
+        this.userService.deleteUser(ids);
+    }
     @PostMapping("/user/refresh")
     @ResponseBody
     public String refreshToken(HttpServletResponse response, @RequestBody TokenForm data) throws JsonProcessingException {

@@ -5,8 +5,6 @@ import Nuricon.parking_webagent_backend.domain.User;
 import Nuricon.parking_webagent_backend.repository.RefreshTokenRepository;
 import Nuricon.parking_webagent_backend.repository.UserRepository;
 import Nuricon.parking_webagent_backend.util.enums.Role;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -16,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -73,6 +70,10 @@ public class UserService implements UserDetailsService {
 
     public List<User> getUserList(){
         return userRepo.findAll();
+    }
+
+    public void deleteUser(List<String> ids) {
+        userRepo.deleteAllByIdInQuery(ids);
     }
 
     public void updateRefreshToken(String userId, String token) {
@@ -152,4 +153,6 @@ public class UserService implements UserDetailsService {
             clearFailure(userId);
         }
     }
+
+
 }
