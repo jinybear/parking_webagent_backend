@@ -13,7 +13,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUserid(String id);
-
     @Query(nativeQuery = true, value="DELETE FROM User WHERE id IN :ids")
     void deleteAllByIdInQuery(@Param("ids") List<String> ids);
 }

@@ -34,6 +34,11 @@ public class UserService implements UserDetailsService {
 
         return optionalUser.get();
     }
+    private User getUserFromId(long id) throws NoSuchElementException{
+        Optional<User> optionalUser = userRepo.findById(id);
+
+        return optionalUser.get();
+    }
 
     @Override
     public UserDetails loadUserByUsername(String id) {
@@ -57,9 +62,13 @@ public class UserService implements UserDetailsService {
         user.setFailurecnt(0);
     }
 
-    public void unlock(String userId){
-        User user = getUser(userId);
-        user.setLocked(false);
+    public void unlock(List<String> ids){
+        for(int i=0; i<ids.size();i++){
+            System.out.println(ids.get(i));
+            long uid=Long.parseLong(ids.get(i));
+            User user = getUserFromId(uid);
+            user.setLocked(false);
+        }
     }
 
     public void registUser(User user){

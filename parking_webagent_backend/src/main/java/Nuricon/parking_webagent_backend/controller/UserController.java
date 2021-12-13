@@ -51,11 +51,22 @@ public class UserController {
     }
     @ApiOperation(value="This method is used to delete accounts")
     @PostMapping("/user/deleteAccount")
-    public void deleteAccount(@RequestBody Map<String, Object> params){
-        List<String> ids= (List<String>) params.get("ids");
+    public void deleteAccount(@RequestBody Map<String, ArrayList<String>> params){
+        List<String> ids= params.get("ids");
         System.out.println(ids);
         this.userService.deleteUser(ids);
     }
+
+    @ApiOperation(value="This method is used to unlock accounts")
+    @PostMapping("/user/unlockAccount")
+    public void unlockAccount(@RequestBody Map<String, ArrayList<String>> params){
+        List<String> ids= params.get("ids");
+        System.out.println(ids);
+        this.userService.unlock(ids);
+    }
+
+
+
     @PostMapping("/user/refresh")
     @ResponseBody
     public String refreshToken(HttpServletResponse response, @RequestBody TokenForm data) throws JsonProcessingException {
