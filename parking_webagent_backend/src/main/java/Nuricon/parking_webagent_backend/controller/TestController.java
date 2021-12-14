@@ -24,10 +24,12 @@ public class TestController {
     private ParkingCustomRepository parkingCustomRepository;
 
     @GetMapping("/test_getMongoData")
-    public HourSummary getTest()
+    public List<HourSummary> getTest()
     {
-        var user = es.getTest("6172e011994ad631bc359077");
-        return user.get();
+//        var user = es.getTest("6172e011994ad631bc359077");
+//        return user.get();
+
+        return es.getTest(null);
     }
 
 

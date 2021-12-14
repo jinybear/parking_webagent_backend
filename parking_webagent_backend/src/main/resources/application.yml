@@ -2,9 +2,6 @@ logging:
   level:
     root: warn
 
-test:
-  text: hello,debug
-
 spring:
   datasource:
     url: jdbc:mariadb://localhost:3306/springdb
@@ -36,3 +33,9 @@ spring:
 #    cache-seconds: -1  # Loaded resource bundle files cache expiration, in seconds. When set to -1, bundles are cached forever.
 #    encoding: UTF-8  # Message bundles encoding.
 #    fallback-to-system-locale: true # Set whether to fall back to the system Locale if no files for a specific Locale have been found.
+
+
+external:
+  mqtt:
+    urls: 192.168.0.203:3306, 192.168.0.250:3306
+

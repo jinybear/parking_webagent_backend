@@ -1,8 +1,11 @@
 package Nuricon.parking_webagent_backend.util.mqtt;
 
+import Nuricon.parking_webagent_backend.service.UserService;
+import Nuricon.parking_webagent_backend.util.beanCaller.BeanUtils;
 import org.eclipse.paho.client.mqttv3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class MqttClientAdapter implements MqttCallbackExtended {
@@ -10,12 +13,16 @@ public class MqttClientAdapter implements MqttCallbackExtended {
     private IMqttAsyncClient _client;
     private String _topic;
 
+    private UserService userService;
+
     public MqttClientAdapter(String url, String topic) throws MqttException {
         _topic = topic;
 
         MqttConnectOptions options = new MqttConnectOptions();
         options.setCleanSession(true);
         options.setAutomaticReconnect(true);
+
+        userService = (UserService) BeanUtils.getBean("userService");
 
         // 접속 및 구독 활성화
         _client = new MqttAsyncClient(url, MqttAsyncClient.generateClientId());

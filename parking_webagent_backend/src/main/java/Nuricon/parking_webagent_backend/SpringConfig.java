@@ -49,7 +49,8 @@ public class SpringConfig extends WebSecurityConfigurerAdapter {
     // ref : https://oddpoet.net/blog/2017/04/27/cors-with-spring-security/
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/", "/user/login", "/user/logout", "/user/refresh").permitAll()
+        http.csrf().disable().authorizeRequests().antMatchers("/","/user/login", "/user/logout",
+                                                                "/user/refresh", "/systems/log").permitAll()
                 .antMatchers("/systems/**").hasAnyRole("SUPERADMIN")
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .anyRequest().authenticated()
