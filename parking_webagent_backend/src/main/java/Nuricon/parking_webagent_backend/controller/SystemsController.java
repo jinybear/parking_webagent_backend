@@ -3,12 +3,16 @@ package Nuricon.parking_webagent_backend.controller;
 import Nuricon.parking_webagent_backend.domain.Log;
 import Nuricon.parking_webagent_backend.service.LogService;
 import Nuricon.parking_webagent_backend.service.UserService;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -31,7 +35,7 @@ public class SystemsController {
     }
 
     @GetMapping("/systems/log")
-    public Page<Log> logs(@RequestParam int page, @RequestParam int size) {
-        return logService.Read(page, size);
+    public Page<Log> logs(@RequestParam int page, @RequestParam int size, @RequestParam boolean asc) {
+        return logService.Read(page, size, asc);
     }
 }
