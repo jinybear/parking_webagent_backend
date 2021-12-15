@@ -1,7 +1,7 @@
 package Nuricon.parking_webagent_backend.controller;
 
+import Nuricon.parking_webagent_backend.domain.ParkingLiveVO;
 import Nuricon.parking_webagent_backend.domain.Source;
-import Nuricon.parking_webagent_backend.domain.Statistics;
 import Nuricon.parking_webagent_backend.service.ParkingLiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ public class ParkingLiveController {
 
     @PostMapping("/parkingLot")
     @ResponseBody
-    public List<Statistics> aaaa(String areaId){
+    public List<ParkingLiveVO> aaaa(String areaId){
         System.out.println(areaId + "주차장아이디");
         return parkingLiveService.getbyId(areaId);
     }

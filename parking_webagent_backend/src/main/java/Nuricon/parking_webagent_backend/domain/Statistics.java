@@ -1,14 +1,17 @@
 package Nuricon.parking_webagent_backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;
 import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.util.annotation.Nullable;
 
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -24,6 +27,7 @@ public class Statistics {
     private int slotId;
     @Field("parking_status")
     private int parkingStatus;
-    @DateTimeFormat(pattern = "yyyy-MM-dd 'T' HH:mm:ss")
-    private Date date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm:ss")
+    private LocalDateTime date;
+
 }
