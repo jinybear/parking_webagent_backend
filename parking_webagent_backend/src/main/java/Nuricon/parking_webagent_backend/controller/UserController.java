@@ -67,7 +67,7 @@ public class UserController {
             String userId = jwtUtil.extractName(data.getToken());
             Map<String, String> tokens = jwtUtil.generateTokens(userId, 1000*60*30);
             String token = new ObjectMapper().writeValueAsString(tokens);
-            userService.updateRefreshToken(userId, tokens.get("refresh-token"));
+            userService.updateRefreshToken(userId, tokens.get("refresh_token"));
 
             return token;
 
@@ -110,7 +110,7 @@ public class UserController {
 
         Map<String, String> tokens = jwtUtil.generateTokens(userId, 1000 * 60 * 10);  // 10min
         String token = new ObjectMapper().writeValueAsString(tokens);
-        userService.updateRefreshToken(userId, tokens.get("refresh-token"));
+        userService.updateRefreshToken(userId, tokens.get("refresh_token"));
 
         // 로그인 성공
         logService.write(String.format("Login 성공 - [%s]", userId), LogLevel.Information, request.getRemoteAddr());

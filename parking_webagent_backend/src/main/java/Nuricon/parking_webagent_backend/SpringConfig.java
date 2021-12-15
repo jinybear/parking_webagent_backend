@@ -69,7 +69,7 @@ public class SpringConfig extends WebSecurityConfigurerAdapter {
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
-        configuration.setExposedHeaders(Arrays.asList("access-token", "refresh-token"));
+        configuration.setExposedHeaders(Arrays.asList("access_token", "refresh_token"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

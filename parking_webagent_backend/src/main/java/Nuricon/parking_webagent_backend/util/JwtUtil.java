@@ -1,8 +1,11 @@
 package Nuricon.parking_webagent_backend.util;
 
+import Nuricon.parking_webagent_backend.domain.User;
+import Nuricon.parking_webagent_backend.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +16,9 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
+    @Autowired
+    private UserService userService;
+
     private String secret = "secret";
 
     public String extractName(String token){
@@ -39,9 +45,12 @@ public class JwtUtil {
     public Map<String, String> generateTokens(String userId, int expired) {
         Map<String, Object> claims = new HashMap<>();
 
+        User user = userService.getUser(userId);
+        claims.put("role",  user.getRole());
+        claims.put("userid", user.getUserid());
         Map<String, String> res = new HashMap<>();
-        res.put("access-token", createToken(claims, userId, expired)); // 30 min
-        res.put("refresh-token", createToken(claims, userId, 1000 * 60 * 60 * 24 * 7));  // 1 week
+        res.put("access_token", createToken(claims, userId, expired)); // 30 min
+        res.put("refresh_token", createToken(claims, userId, 1000 * 60 * 60 * 24 * 7));  // 1 week
 
         return res;
     }
