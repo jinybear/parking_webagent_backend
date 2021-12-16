@@ -1,4 +1,4 @@
-package Nuricon.parking_webagent_backend.domain;
+package Nuricon.parking_webagent_backend.VO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +10,6 @@ public class ParkingLiveVO {
     private long parkingFull;
     private long parkingEmpty;
     private long parkingTotal;
-    private double fullPercent;
-
+    private String fullPercent;
 
 }
