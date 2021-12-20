@@ -65,6 +65,15 @@ public class UserController {
         this.userService.unlock(ids);
     }
 
+    @ApiOperation(value="This method is used to change password")
+    @PostMapping("/user/changePassword")
+    public void changePassword(@RequestBody UserForm user){
+        String uuid=user.getId();
+        String password = user.getPassword();
+        this.userService.changePW(uuid, password);
+    }
+
+
 
 
     @PostMapping("/user/refresh")
