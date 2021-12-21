@@ -1,6 +1,6 @@
 logging:
   level:
-    root: warn
+    root: WARN  #( TRACT > DEBUG > INFO > WARN > ERROR > FATAL > OFF )
 
 spring:
   datasource:
@@ -37,5 +37,12 @@ spring:
 
 external:
   mqtt:
-    urls: 192.168.0.203:3306, 192.168.0.250:3306
+    enable: true
+    urls: tcp://192.168.0.225:1883
+  dataManager:
+    enable: true
+    url: http://192.168.0.225:9090
+    uri: outdoorparking/manager/parkconfig/infersources
+
+
 

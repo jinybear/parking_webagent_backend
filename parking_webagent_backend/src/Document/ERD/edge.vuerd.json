@@ -1,0 +1,1185 @@
+{
+  "canvas": {
+    "version": "2.2.10",
+    "width": 4000,
+    "height": 4000,
+    "scrollTop": -569.5,
+    "scrollLeft": -705,
+    "zoomLevel": 0.8,
+    "show": {
+      "tableComment": true,
+      "columnComment": true,
+      "columnDataType": true,
+      "columnDefault": true,
+      "columnAutoIncrement": false,
+      "columnPrimaryKey": true,
+      "columnUnique": false,
+      "columnNotNull": true,
+      "relationship": true
+    },
+    "database": "MariaDB",
+    "databaseName": "",
+    "canvasType": "ERD",
+    "language": "GraphQL",
+    "tableCase": "pascalCase",
+    "columnCase": "camelCase",
+    "highlightTheme": "VS2015",
+    "bracketType": "none",
+    "setting": {
+      "relationshipDataTypeSync": true,
+      "relationshipOptimization": false,
+      "columnOrder": [
+        "columnName",
+        "columnDataType",
+        "columnNotNull",
+        "columnUnique",
+        "columnAutoIncrement",
+        "columnDefault",
+        "columnComment"
+      ]
+    },
+    "pluginSerializationMap": {}
+  },
+  "table": {
+    "tables": [
+      {
+        "name": "area_sector",
+        "comment": "주차 구역",
+        "columns": [
+          {
+            "name": "id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "5d643449-c422-446b-ac99-39e09fd77cea"
+          },
+          {
+            "name": "sector_id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "670acdfb-9fe5-4a0a-8ef3-42ddeed4e3b7"
+          },
+          {
+            "name": "name",
+            "comment": "",
+            "dataType": "VARCHAR",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60.88720703125,
+              "widthDefault": 60
+            },
+            "id": "9cc59925-7ce6-4372-899a-cbb24da2b36c"
+          },
+          {
+            "name": "description",
+            "comment": "",
+            "dataType": "VARCHAR",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 67.14599609375,
+              "widthComment": 60,
+              "widthDataType": 60.88720703125,
+              "widthDefault": 60
+            },
+            "id": "4d19ae4c-84e3-4b57-a908-f8e411bac072"
+          },
+          {
+            "name": "area_id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "7ab2907f-475a-4119-b72b-0862c4763df6"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 978.6682,
+          "top": 294.7172,
+          "zIndex": 3,
+          "widthName": 68.2060546875,
+          "widthComment": 60,
+          "color": "#03A9F4"
+        },
+        "visible": true,
+        "id": "f0a6a25f-86ed-48b7-9e04-51586fd0a31b"
+      },
+      {
+        "name": "area_sector_slot",
+        "comment": "주차 구역 내 슬롯",
+        "columns": [
+          {
+            "name": "id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "eb49127c-d236-4578-b54e-f8b3ee3b9bb0"
+          },
+          {
+            "name": "slot_id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "fa8efb04-4c8a-491f-ab15-4650117e70a3"
+          },
+          {
+            "name": "sector_id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "bf6aaae5-d51b-4a1d-8b95-14352c58010b"
+          },
+          {
+            "name": "slottype_id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 65.3115234375,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "a57a3ad3-88d2-47cc-a3a2-56fe31c3efde"
+          },
+          {
+            "name": "slotlife_id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "4b977990-e7ed-459b-8a6d-0b060d0e54d4"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 1464.889,
+          "top": 315.0546,
+          "zIndex": 5,
+          "widthName": 94.8408203125,
+          "widthComment": 106.7109375,
+          "color": "#03A9F4"
+        },
+        "visible": true,
+        "id": "bb17dd50-c736-4c2a-8c69-1292606dce5f"
+      },
+      {
+        "name": "area",
+        "comment": "주차장",
+        "columns": [
+          {
+            "name": "id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "e8c04f5a-c8c9-4645-98c0-b278401a6962"
+          },
+          {
+            "name": "area_id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "e010ac6a-053c-4a05-af63-2479b75cde98"
+          },
+          {
+            "name": "name",
+            "comment": "",
+            "dataType": "VARCHAR",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60.88720703125,
+              "widthDefault": 60
+            },
+            "id": "ce75218d-98dd-447c-b337-2435fc311883"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 412.0074,
+          "top": 346.576,
+          "zIndex": 1,
+          "widthName": 60,
+          "widthComment": 60,
+          "color": "#03A9F4"
+        },
+        "visible": true,
+        "id": "3e30a02e-2aa0-48f7-bcc4-3743a6754475"
+      },
+      {
+        "name": "source",
+        "comment": "camera 정보",
+        "columns": [
+          {
+            "name": "id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "174cc61f-183c-4ad8-9f3c-f9debf291887"
+          },
+          {
+            "name": "source_id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "77b7a531-a295-463a-88bb-ef4150575619"
+          },
+          {
+            "name": "description",
+            "comment": "",
+            "dataType": "VARCHAR",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 67.14599609375,
+              "widthComment": 60,
+              "widthDataType": 60.88720703125,
+              "widthDefault": 60
+            },
+            "id": "33641d49-cd6c-42c9-8717-aee26a14c1f7"
+          },
+          {
+            "name": "area_id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "98c5249d-6598-4a87-b188-234f2b537534"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 904.4202,
+          "top": 570.903,
+          "zIndex": 4,
+          "widthName": 60,
+          "widthComment": 75.2265625,
+          "color": "#E91E63"
+        },
+        "visible": true,
+        "id": "bd536e81-8955-44b0-a781-64ea556b1571"
+      },
+      {
+        "name": "pts",
+        "comment": "slot 또는 sidezone 기준 좌표",
+        "columns": [
+          {
+            "name": "id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "07a2f50b-cb66-4ad5-b42a-cc70603b4b94"
+          },
+          {
+            "name": "pts_id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "4144f783-3725-473d-b3d9-59e6eaee8427"
+          },
+          {
+            "name": "pts",
+            "comment": "8개 좌표",
+            "dataType": "JSON",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "0c3f1ef5-5a83-487b-ad9b-290151bdff09"
+          },
+          {
+            "name": "source_id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "ec03f6eb-1d9f-4e59-a34e-7ff97af6c35d"
+          },
+          {
+            "name": "slot_id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "6c2eab2b-178b-40fb-bac6-6e7aadd85b6f"
+          },
+          {
+            "name": "outside_slot_id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 88.5947265625,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "09616d27-2a67-4ad6-b480-b7652e1320ea"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 1222.624,
+          "top": 993.1215,
+          "zIndex": 6,
+          "widthName": 60,
+          "widthComment": 120,
+          "color": "#FFEB3B"
+        },
+        "visible": true,
+        "id": "e9230596-8b21-40b0-b824-7a2232806c44"
+      },
+      {
+        "name": "outside_slot",
+        "comment": "구간외 구역의 slot",
+        "columns": [
+          {
+            "name": "id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "5c821f15-fd65-4dc5-ad72-156580b81bf6"
+          },
+          {
+            "name": "outside_slot_id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 88.5947265625,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "231d5a19-ad45-4a6b-9dde-26228407048e"
+          },
+          {
+            "name": "area_id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "130bc57a-dcd9-4d57-85a9-4be650c531c4"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 396.832,
+          "top": 855.663,
+          "zIndex": 2,
+          "widthName": 72.03369140625,
+          "widthComment": 110.240234375,
+          "color": "#03A9F4"
+        },
+        "visible": true,
+        "id": "e51fced4-81c7-4d04-880a-14c13fcd7297"
+      },
+      {
+        "name": "slottype",
+        "comment": "",
+        "columns": [
+          {
+            "name": "id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "5e07a127-faf7-4e45-aa00-2289ebf087ab"
+          },
+          {
+            "name": "type",
+            "comment": "",
+            "dataType": "ENUM",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "25e7b007-8fa2-4229-b2d3-c690e30a66e5"
+          },
+          {
+            "name": "description",
+            "comment": "",
+            "dataType": "VARCHAR",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 67.14599609375,
+              "widthComment": 60,
+              "widthDataType": 60.88720703125,
+              "widthDefault": 60
+            },
+            "id": "5ac1a660-b5cc-4533-b914-e777878071a1"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 2027.4668,
+          "top": 290,
+          "zIndex": 7,
+          "widthName": 60,
+          "widthComment": 60
+        },
+        "visible": true,
+        "id": "90df483f-fcae-4ac4-9462-6b2d0e1b65a0"
+      },
+      {
+        "name": "slotlife",
+        "comment": "slot 운영시간 list 를 관리",
+        "columns": [
+          {
+            "name": "id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "3991b6dd-60d6-4608-b8f0-3257a5b4b1c1"
+          },
+          {
+            "name": "life",
+            "comment": "",
+            "dataType": "JSON",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "1f7988ac-6347-4e38-ba11-c5a946bbb679"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 1923.25,
+          "top": 569.5,
+          "zIndex": 8,
+          "widthName": 60,
+          "widthComment": 120
+        },
+        "visible": true,
+        "id": "d0f85c57-bc92-4928-9328-47dad3dda327"
+      }
+    ],
+    "indexes": []
+  },
+  "memo": {
+    "memos": [
+      {
+        "value": "[pts]\n\nslot_id, outside_slot_id는 \n구역내 또는 구역외 slot 일 것이므로 둘 중 하나만 값이 할당되야 함. \n\n(source_id & slot_id & outside_slot_id) 는 unique 이다.",
+        "ui": {
+          "active": false,
+          "left": 1447.75,
+          "top": 1088.6944444444446,
+          "zIndex": 11,
+          "width": 354,
+          "height": 129
+        },
+        "id": "3e4ab8c4-a6f7-4b03-b200-d1c4d500e836"
+      },
+      {
+        "value": "mongodb로 json 제공 가능 여부 \n\n1. sources\n   - RDB의 source table row를 json으로 하여 제공\n\n2. parkingslots\n   - pts table row 중 slot_id 가 null 이 아닌 대상만 json으로 하여 제공\n\n3. outsides\n   - pts table row 중 outside_slot_id 가 null 이 아닌 대상만 json으로 하여 제공\n\n4. areas\n   - area_sector_slot row 중 slotlife_id 가 할당된 대상만 json으로 하여 제공",
+        "ui": {
+          "active": false,
+          "left": 390,
+          "top": 1044.25,
+          "zIndex": 10,
+          "width": 582,
+          "height": 241
+        },
+        "id": "ce633f54-dc79-4af6-8a49-e17cf7eccdd9"
+      },
+      {
+        "value": "[slottype]\n\n1. 일반\n2. 소형\n3. 대형\n4. 카라반(캠핑카)\n5. 카멜레온\n6. 장애인\n7. 여성\n8. 주차면외 구간\n9. 보행(제외)\n10. 차량 진입로(제외)\n11. 차량 출입로(제외)",
+        "ui": {
+          "active": false,
+          "left": 2334.5,
+          "top": 314.5,
+          "zIndex": 12,
+          "width": 190,
+          "height": 240
+        },
+        "id": "831aa468-fc9a-4956-ba14-582876dda659"
+      },
+      {
+        "value": "[area_sector_slot]\n카멜레온 주차구역의 경우 별도의 slot id 를 붙여 관리.\n\n예) \nslot1 과 slot2 를 합친 카멜레온 구간은 slot3 으로 관리\n",
+        "ui": {
+          "active": false,
+          "left": 1544.5,
+          "top": 170.75,
+          "zIndex": 9,
+          "width": 349,
+          "height": 115
+        },
+        "id": "3f74cc81-4f51-4ed6-ae48-6416ec4e6f85"
+      }
+    ]
+  },
+  "relationship": {
+    "relationships": [
+      {
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "f0a6a25f-86ed-48b7-9e04-51586fd0a31b",
+          "columnIds": [
+            "5d643449-c422-446b-ac99-39e09fd77cea"
+          ],
+          "x": 1333.701403125,
+          "y": 380.4672,
+          "direction": "right"
+        },
+        "end": {
+          "tableId": "bb17dd50-c736-4c2a-8c69-1292606dce5f",
+          "columnIds": [
+            "bf6aaae5-d51b-4a1d-8b95-14352c58010b"
+          ],
+          "x": 1464.889,
+          "y": 400.8046,
+          "direction": "left"
+        },
+        "constraintName": "fk_sector_to_slot",
+        "visible": true,
+        "id": "0c11bf2b-9833-4130-ba0b-5be5ecb41656"
+      },
+      {
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "3e30a02e-2aa0-48f7-bcc4-3743a6754475",
+          "columnIds": [
+            "e8c04f5a-c8c9-4645-98c0-b278401a6962"
+          ],
+          "x": 759.89460703125,
+          "y": 379.201,
+          "direction": "right"
+        },
+        "end": {
+          "tableId": "f0a6a25f-86ed-48b7-9e04-51586fd0a31b",
+          "columnIds": [
+            "7ab2907f-475a-4119-b72b-0862c4763df6"
+          ],
+          "x": 978.6682,
+          "y": 380.4672,
+          "direction": "left"
+        },
+        "constraintName": "fk_area_to_sector",
+        "visible": true,
+        "id": "4fe4d130-392e-4ad9-a72b-79034074dd54"
+      },
+      {
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "bd536e81-8955-44b0-a781-64ea556b1571",
+          "columnIds": [
+            "174cc61f-183c-4ad8-9f3c-f9debf291887"
+          ],
+          "x": 1259.453403125,
+          "y": 646.403,
+          "direction": "right"
+        },
+        "end": {
+          "tableId": "e9230596-8b21-40b0-b824-7a2232806c44",
+          "columnIds": [
+            "ec03f6eb-1d9f-4e59-a34e-7ff97af6c35d"
+          ],
+          "x": 1316.522681640625,
+          "y": 993.1215,
+          "direction": "top"
+        },
+        "constraintName": "fk_source_to_pts",
+        "visible": true,
+        "id": "26731196-233d-4fd3-a70f-3d03886b3bd0"
+      },
+      {
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "3e30a02e-2aa0-48f7-bcc4-3743a6754475",
+          "columnIds": [
+            "e8c04f5a-c8c9-4645-98c0-b278401a6962"
+          ],
+          "x": 759.89460703125,
+          "y": 444.451,
+          "direction": "right"
+        },
+        "end": {
+          "tableId": "bd536e81-8955-44b0-a781-64ea556b1571",
+          "columnIds": [
+            "98c5249d-6598-4a87-b188-234f2b537534"
+          ],
+          "x": 904.4202,
+          "y": 646.403,
+          "direction": "left"
+        },
+        "constraintName": "fk_area_to_source",
+        "visible": true,
+        "id": "9b2064bf-2779-4abe-94e0-b794a5501f20"
+      },
+      {
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "3e30a02e-2aa0-48f7-bcc4-3743a6754475",
+          "columnIds": [
+            "e8c04f5a-c8c9-4645-98c0-b278401a6962"
+          ],
+          "x": 585.951003515625,
+          "y": 477.076,
+          "direction": "bottom"
+        },
+        "end": {
+          "tableId": "e51fced4-81c7-4d04-880a-14c13fcd7297",
+          "columnIds": [
+            "130bc57a-dcd9-4d57-85a9-4be650c531c4"
+          ],
+          "x": 584.62936328125,
+          "y": 855.663,
+          "direction": "top"
+        },
+        "constraintName": "fk_area_to_outside_slot",
+        "visible": true,
+        "id": "f28d2f1d-c6d5-4979-9ff4-39fc51c51165"
+      },
+      {
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Ring",
+        "start": {
+          "tableId": "bb17dd50-c736-4c2a-8c69-1292606dce5f",
+          "columnIds": [
+            "eb49127c-d236-4578-b54e-f8b3ee3b9bb0"
+          ],
+          "x": 1641.04476171875,
+          "y": 486.5546,
+          "direction": "bottom"
+        },
+        "end": {
+          "tableId": "e9230596-8b21-40b0-b824-7a2232806c44",
+          "columnIds": [
+            "6c2eab2b-178b-40fb-bac6-6e7aadd85b6f"
+          ],
+          "x": 1504.320044921875,
+          "y": 993.1215,
+          "direction": "top"
+        },
+        "constraintName": "fk_area_sector_slot_to_pts",
+        "visible": true,
+        "id": "04d55880-642c-4eec-a0f8-7b8062cb917e"
+      },
+      {
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Ring",
+        "start": {
+          "tableId": "e51fced4-81c7-4d04-880a-14c13fcd7297",
+          "columnIds": [
+            "5c821f15-fd65-4dc5-ad72-156580b81bf6"
+          ],
+          "x": 772.4267265625,
+          "y": 920.913,
+          "direction": "right"
+        },
+        "end": {
+          "tableId": "e9230596-8b21-40b0-b824-7a2232806c44",
+          "columnIds": [
+            "09616d27-2a67-4ad6-b480-b7652e1320ea"
+          ],
+          "x": 1222.624,
+          "y": 1089.1215,
+          "direction": "left"
+        },
+        "constraintName": "fk_outside_slot_to_pts",
+        "visible": true,
+        "id": "18ee53eb-ee1f-4f0b-988a-618f6c340336"
+      },
+      {
+        "identification": false,
+        "relationshipType": "OneOnly",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "90df483f-fcae-4ac4-9462-6b2d0e1b65a0",
+          "columnIds": [
+            "5e07a127-faf7-4e45-aa00-2289ebf087ab"
+          ],
+          "x": 2027.4668,
+          "y": 355.25,
+          "direction": "left"
+        },
+        "end": {
+          "tableId": "bb17dd50-c736-4c2a-8c69-1292606dce5f",
+          "columnIds": [
+            "a57a3ad3-88d2-47cc-a3a2-56fe31c3efde"
+          ],
+          "x": 1817.2005234375,
+          "y": 357.9296,
+          "direction": "right"
+        },
+        "constraintName": "fk_slotcategory_to_area_sector_slot",
+        "visible": true,
+        "id": "51a736bd-2c4e-4070-9fa7-85b4a1b0731d"
+      },
+      {
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "d0f85c57-bc92-4928-9328-47dad3dda327",
+          "columnIds": [
+            "3991b6dd-60d6-4608-b8f0-3257a5b4b1c1"
+          ],
+          "x": 1923.25,
+          "y": 624.5,
+          "direction": "left"
+        },
+        "end": {
+          "tableId": "bb17dd50-c736-4c2a-8c69-1292606dce5f",
+          "columnIds": [
+            "4b977990-e7ed-459b-8a6d-0b060d0e54d4"
+          ],
+          "x": 1817.2005234375,
+          "y": 443.6796,
+          "direction": "right"
+        },
+        "constraintName": "fk_slotlife_to_area_sector_slot",
+        "visible": true,
+        "id": "d7c2ad61-6461-4608-99e5-7d9d3f50caeb"
+      }
+    ]
+  }
+}

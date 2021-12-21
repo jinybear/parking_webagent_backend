@@ -1,5 +1,6 @@
 package Nuricon.parking_webagent_backend.util.beanCaller;
 
+import Nuricon.parking_webagent_backend.service.UserService;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -7,8 +8,8 @@ import org.springframework.context.ApplicationContext;
  */
 public class BeanUtils {
 
-    public static Object getBean(String beanName) {
+    public static Object getBean(Class<?> classType) {
         ApplicationContext applicationContext = ApplicationContextProvider.getApplicationContext();
-        return applicationContext.getBean(beanName);
+        return applicationContext.getBean(classType);
     }
 }
