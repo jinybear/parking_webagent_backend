@@ -172,4 +172,18 @@ public class UserService implements UserDetailsService {
         user.setPassword(encodedPW);
         //dirty check 로 인한 update
     }
+
+    public void changeMyPW(String uuid, String password, String nowpassword) throws IllegalAccessException {
+        long uid = Long.parseLong(uuid);
+        User user = getUserFromId(uid);
+        boolean passwordIsCorrect = pe.matches(nowpassword,user.getPassword());
+        if (!passwordIsCorrect) {
+            String msg = messageSource.getMessage("error.NotCorrectPW", null, LocaleContextHolder.getLocale());
+            throw new IllegalAccessException(msg);
+        }else{
+            user.setPassword(pe.encode(password));
+        }
+        //dirty check 로 인한 update
+
+    }
 }

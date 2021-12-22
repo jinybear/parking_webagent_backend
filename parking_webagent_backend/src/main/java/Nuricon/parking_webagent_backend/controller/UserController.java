@@ -73,6 +73,22 @@ public class UserController {
         this.userService.changePW(uuid, password);
     }
 
+    @ApiOperation(value="This method is used to change password")
+    @PostMapping("/user/changeMyPassword")
+    public String changeMyPassword(HttpServletResponse response, @RequestBody Map<String, String> params)throws JsonProcessingException{
+        System.out.println(params);
+        String uuid=params.get("id");
+        String nowpassword = params.get("nowpassword");
+        String password = params.get("password");
+        try{
+            this.userService.changeMyPW(uuid, password, nowpassword);
+        }catch(IllegalAccessException ex){
+            response.setStatus(404);
+            return ex.getMessage();
+        }
+        return null;
+    }
+
 
 
 
