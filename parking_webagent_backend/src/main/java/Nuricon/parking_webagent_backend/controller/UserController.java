@@ -50,6 +50,7 @@ public class UserController {
     @Autowired
     private LogService logService;
 
+    private final int token_validation = 1000*60*10;
 
     @ApiOperation(value="This method is used to add account")
     @PostMapping("/api/user/add")
@@ -115,7 +116,7 @@ public class UserController {
 
             // 만약 refresh token 기간이 만료전으로 유효하면
             String userId = jwtUtil.extractName(data.getToken());
-            Map<String, String> tokens = jwtUtil.generateTokens(userId, 1000*60*30);
+            Map<String, String> tokens = jwtUtil.generateTokens(userId, token_validation);
             String token = new ObjectMapper().writeValueAsString(tokens);
             userService.updateRefreshToken(userId, tokens.get("refresh_token"));
 
@@ -157,7 +158,7 @@ public class UserController {
                 new UsernamePasswordAuthenticationToken(userId, form.getPassword())
         );
 
-        Map<String, String> tokens = jwtUtil.generateTokens(userId, 1000 * 60 * 10);  // 10min
+        Map<String, String> tokens = jwtUtil.generateTokens(userId, token_validation);  // 10min
         String token = new ObjectMapper().writeValueAsString(tokens);
         userService.updateRefreshToken(userId, tokens.get("refresh_token"));
 
