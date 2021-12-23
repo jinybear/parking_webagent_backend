@@ -51,6 +51,8 @@ dependencies {
 	implementation 'org.springframework.integration:spring-integration-mqtt'
 	implementation 'com.fasterxml.jackson.core:jackson-core:2.13.0'
 
+	implementation group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.5.1'
+
 	// WAR 배포 사용 할 경우 활성화
 	//implementation 'org.springframework.boot:spring-boot-starter-tomcat'
 

@@ -135,7 +135,6 @@ public class UserController {
     public String login(HttpServletRequest request, HttpServletResponse response, @RequestBody UserForm form) throws JsonProcessingException {
         String userId = form.getId();
         String password = form.getPassword();
-
         try{
             userService.checkIdAndPassword(userId, password);
         } catch(NoSuchElementException ex){
