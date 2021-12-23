@@ -37,19 +37,6 @@ public class SystemsController {
     @Autowired
     private MessageSource messageSource;
 
-    @PostMapping("/api/systems/unlock_account")
-    public String unlock_account(HttpServletResponse response, @RequestParam String userId) {
-        try {
-            userService.unlock(userId);
-        } catch (NoSuchElementException ex){
-            String msg = messageSource.getMessage("error.NotExistID", null, Locale.getDefault());
-            response.setStatus(403);
-            return msg;
-        }
-
-        return userId;
-    }
-
     @GetMapping("/api/systems/log")
     public Page<Log> logs(@RequestParam int page, @RequestParam int size, @RequestParam boolean asc) {
         return logService.Read(page, size, asc);
@@ -83,4 +70,5 @@ public class SystemsController {
         private String name;
         private LocalDateTime timestamp;
     }
+
 }

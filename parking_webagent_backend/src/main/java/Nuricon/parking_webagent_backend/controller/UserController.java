@@ -24,10 +24,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import javax.servlet.http.HttpSession;
 import java.util.Locale;
 import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
+import java.time.Clock;
+
+
 
 @RestController
 public class UserController {
@@ -52,8 +56,54 @@ public class UserController {
     public User account(@RequestBody UserForm form){
         User user = new User(form.getId(), form.getPassword(), Role.ROLE_ADMIN);
         this.userService.registUser(user);
-
         return user;
+    }
+
+    @ApiOperation(value="This method is used to get accounts")
+    @PostMapping("/api/user/getAccountList")
+    public List<User> getAccountList(){
+        List<User> users=this.userService.getUserList();
+        System.out.println(users);
+        return users;
+    }
+    @ApiOperation(value="This method is used to delete accounts")
+    @PostMapping("/api/user/deleteAccount")
+    public void deleteAccount(@RequestBody Map<String, ArrayList<String>> params){
+        List<String> ids= params.get("ids");
+        System.out.println(ids);
+        this.userService.deleteUser(ids);
+    }
+
+    @ApiOperation(value="This method is used to unlock accounts")
+    @PostMapping("/api/user/unlockAccount")
+    public void unlockAccount(@RequestBody Map<String, ArrayList<String>> params){
+        List<String> ids= params.get("ids");
+        System.out.println(ids);
+        this.userService.unlock(ids);
+    }
+
+    @ApiOperation(value="This method is used to change password")
+    @PostMapping("/api/user/changePassword")
+    public void changePassword(@RequestBody UserForm user){
+        String uuid=user.getId();
+        String password = user.getPassword();
+        this.userService.changePW(uuid, password);
+    }
+
+    @ApiOperation(value="This method is used to change password")
+    @PostMapping("/api/user/changeMyPassword")
+    public String changeMyPassword(HttpServletResponse response, @RequestBody Map<String, String> params)throws JsonProcessingException{
+        System.out.println(params);
+        String uuid=params.get("id");
+        String nowpassword = params.get("nowpassword");
+        String password = params.get("password");
+        try{
+            this.userService.changeMyPW(uuid, password, nowpassword);
+        }catch(IllegalAccessException ex){
+            response.setStatus(404);
+            return ex.getMessage();
+        }
+        return null;
     }
 
     @PostMapping("/api/user/refresh")

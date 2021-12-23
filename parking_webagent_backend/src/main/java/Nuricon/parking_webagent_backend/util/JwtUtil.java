@@ -48,6 +48,7 @@ public class JwtUtil {
         User user = userService.getUser(userId);
         claims.put("role",  user.getRole());
         claims.put("userid", user.getUserid());
+        claims.put("uuid", user.getId());
         Map<String, String> res = new HashMap<>();
         res.put("access_token", createToken(claims, userId, expired)); // 30 min
         res.put("refresh_token", createToken(claims, userId, 1000 * 60 * 60 * 24 * 7));  // 1 week
