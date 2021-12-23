@@ -13,12 +13,14 @@ public class ParkingLiveController {
     @Autowired
     ParkingLiveService parkingLiveService;
 
+    // 라이브 메뉴 선택시
     @PostMapping("/live")
     @ResponseBody
     public List<Source> ParkingLiveSourceList(){
         return parkingLiveService.sourceKey();
     }
 
+    //주차장 선택시 : 전체, 구역 만공차
     @PostMapping("/parkingLot")
     @ResponseBody
     public List<ParkingLiveVO> parkingLive(String areaId){
@@ -26,7 +28,8 @@ public class ParkingLiveController {
         return parkingLiveService.parkingLive(areaId);
     }
 
-    @PostMapping("/OutParking")
+    //주차장 선택시 : 구역외
+    @PostMapping("/outParking")
     @ResponseBody
     public List<Integer> outParkingLive(String areaId){
         return parkingLiveService.outParkingLive(areaId);

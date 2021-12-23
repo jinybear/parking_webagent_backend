@@ -23,6 +23,7 @@ spring:
   data:
     mongodb:
       host: 34.64.151.162
+#      host: localhost
       port: 27017
       database: parkingflex
       authentication-database: parkingflex

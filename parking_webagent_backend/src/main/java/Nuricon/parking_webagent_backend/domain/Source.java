@@ -19,9 +19,4 @@ public class Source {
     private int areaId;
     private int source_id;
     private String source_desc;
-
-//    @Override
-//    public String toString(){
-//        return "area_id : " + area_id + "source_id : " + source_desc;
-//    }
 }
