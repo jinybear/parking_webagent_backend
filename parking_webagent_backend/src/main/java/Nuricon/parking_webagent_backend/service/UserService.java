@@ -35,7 +35,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PasswordEncoder pe;
 
-    private User getUser(String userId) throws NoSuchElementException{
+    public User getUser(String userId) throws NoSuchElementException{
         Optional<User> optionalUser = userRepo.findByUserid(userId);
 
         return optionalUser.get();
