@@ -48,7 +48,7 @@ public class UserController {
 
 
     @ApiOperation(value="This method is used to add account")
-    @PostMapping("/user/add")
+    @PostMapping("/api/user/add")
     public User account(@RequestBody UserForm form){
         User user = new User(form.getId(), form.getPassword(), Role.ROLE_ADMIN);
         this.userService.registUser(user);
@@ -56,9 +56,9 @@ public class UserController {
         return user;
     }
 
-    @PostMapping("/user/refresh")
+    @PostMapping("/api/user/refresh")
     @ResponseBody
-    public String refreshToken(HttpServletResponse response, @RequestBody TokenForm data) throws JsonProcessingException {
+    public String refreshToken(HttpServletResponse response, @RequestBody TokenForm data) {
         try {
             
             refreshTokenRepository.findByToken(data.getToken());
@@ -80,7 +80,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/user/login")
+    @PostMapping("/api/user/login")
     @ResponseBody
     public String login(HttpServletRequest request, HttpServletResponse response, @RequestBody UserForm form) throws JsonProcessingException {
         String userId = form.getId();
@@ -118,7 +118,7 @@ public class UserController {
         return token;
     }
 
-    @PostMapping("/user/logout")
+    @PostMapping("/api/user/logout")
     @ResponseBody
     public String logout(HttpServletRequest httpServletRequest) {
         // refreshToken 제거

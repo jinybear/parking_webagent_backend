@@ -2,7 +2,6 @@ package Nuricon.parking_webagent_backend;
 
 import Nuricon.parking_webagent_backend.filter.JwtFilter;
 import Nuricon.parking_webagent_backend.service.UserService;
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,9 +48,9 @@ public class SpringConfig extends WebSecurityConfigurerAdapter {
     // ref : https://oddpoet.net/blog/2017/04/27/cors-with-spring-security/
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/","/user/login", "/user/logout"
-                                                                ,"/user/refresh", "/systems/log").permitAll()
-                .antMatchers("/systems/**").hasAnyRole("SUPERADMIN")
+        http.csrf().disable().authorizeRequests().antMatchers("/","/api/user/login", "/api/user/logout"
+                                                                ,"/api/user/refresh", "/api/systems/log").permitAll()
+                .antMatchers("/api/systems/**").hasAnyRole("SUPERADMIN")
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .anyRequest().authenticated()
                 .and().cors()

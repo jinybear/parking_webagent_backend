@@ -4,6 +4,7 @@ import Nuricon.parking_webagent_backend.util.mqtt.strategy.CheckEdgeStateStrateg
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
+import org.hibernate.sql.Update;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -61,7 +62,8 @@ public class UpdateSharedMemory {
                     .retrieve()
                     .bodyToMono(String.class).block();
 
-            System.out.println("[" + LocalDateTime.now() + "]" + " res : " + res);
+            logger.debug("[" + LocalDateTime.now() + "]" + " res : " + res);
+
             synchronized (this){
                 sharedMemory.dataManagerInfersources = res;
             }

@@ -37,7 +37,7 @@ public class SystemsController {
     @Autowired
     private MessageSource messageSource;
 
-    @PostMapping("/systems/unlock_account")
+    @PostMapping("/api/systems/unlock_account")
     public String unlock_account(HttpServletResponse response, @RequestParam String userId) {
         try {
             userService.unlock(userId);
@@ -50,12 +50,12 @@ public class SystemsController {
         return userId;
     }
 
-    @GetMapping("/systems/log")
+    @GetMapping("/api/systems/log")
     public Page<Log> logs(@RequestParam int page, @RequestParam int size, @RequestParam boolean asc) {
         return logService.Read(page, size, asc);
     }
 
-    @GetMapping("/systems/edgestatus")
+    @GetMapping("/api/systems/edgestatus")
     public List<EdgeStatus> edgeStatus(){
         List<EdgeStatus> res = new ArrayList<>();
 
@@ -64,10 +64,9 @@ public class SystemsController {
             List<EdgeSource> sources = edgeSourceRepository.findBySourceId(key);
             if(!sources.isEmpty()) {
                 EdgeSource source = sources.get(0);
-                if (res.stream().filter((x) -> x.getName() == source.getEdge().getName()).count() > 0) {
-                    //EdgeStatus status = new EdgeStatus(source.getEdge().getName(), sharedMemory.edgeStatusMap.get(key));
-                    //res.add(status);
-                    res.removeAll(res.stream().filter((x) -> x.getName() == source.getEdge().getName())
+                //if (res.stream().filter((x) -> x.getName().equals(source.getEdge().getName())).count() > 0) {
+                if(res.stream().anyMatch((x) -> x.getName().equals(source.getEdge().getName()))){
+                    res.removeAll(res.stream().filter((x) -> x.getName().equals(source.getEdge().getName()))
                             .collect(Collectors.toList()));
                 }
 

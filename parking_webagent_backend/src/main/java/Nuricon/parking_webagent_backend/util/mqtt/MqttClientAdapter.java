@@ -34,8 +34,7 @@ public class MqttClientAdapter implements MqttCallbackExtended {
     }
 
     @Override
-    public void messageArrived(String topic, MqttMessage message) throws Exception {
-        System.out.println(message.getPayload().toString());
+    public void messageArrived(String topic, MqttMessage message)  {
     }
 
     @Override
@@ -46,9 +45,7 @@ public class MqttClientAdapter implements MqttCallbackExtended {
     public void connectComplete(boolean reconnect, String serverURI) {
         try {
             for(String topic: this.topics){
-                this._client.subscribe(topic, 1, (tpic, msg) -> {
-                    this.strategy.processMessage(tpic, msg);
-                });
+                this._client.subscribe(topic, 1, (tpic, msg) -> this.strategy.processMessage(tpic, msg));
             }
         } catch (MqttException e) {
             e.printStackTrace();
