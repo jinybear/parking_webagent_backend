@@ -2,6 +2,7 @@ package Nuricon.parking_webagent_backend;
 
 import Nuricon.parking_webagent_backend.filter.JwtFilter;
 import Nuricon.parking_webagent_backend.service.UserService;
+import Nuricon.parking_webagent_backend.util.JwtEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +34,9 @@ public class SpringConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtFilter jwtFilter;
 
+    @Autowired
+    private JwtEntryPoint jwtEntryPoint;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService);
@@ -48,13 +52,16 @@ public class SpringConfig extends WebSecurityConfigurerAdapter {
     // ref : https://oddpoet.net/blog/2017/04/27/cors-with-spring-security/
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/","/api/user/login", "/api/user/logout"
-                                                                ,"/api/user/refresh", "/api/systems/log").permitAll()
+        http.csrf().disable().authorizeRequests()
+                .antMatchers("/", "/api/user/login","/api/user/logout","/api/user/refresh",
+                        "/swagger-ui/**", "/swagger-ui"
+                ).permitAll()
                 .antMatchers("/api/systems/**").hasAnyRole("SUPERADMIN")
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .anyRequest().authenticated()
+                .and().exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
                 .and().cors()
-                .and().exceptionHandling().and().sessionManagement()
+                .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
@@ -84,6 +91,7 @@ public class SpringConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-resources/**",
                 "/swagger-ui.html",
                 "/webjars/**",
+                "/swagger**",
                 "/v3/api-docs",
                 "/swagger-ui/**"
                 );

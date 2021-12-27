@@ -47,8 +47,8 @@ public class SystemsController {
         List<EdgeStatus> res = new ArrayList<>();
 
         // sharedMemory에 매칭되는 sourceId는 Edge list에 반영
-        for(Integer key : sharedMemory.edgeStatusMap.keySet()){
-            List<EdgeSource> sources = edgeSourceRepository.findBySourceId(key);
+        for(String key : sharedMemory.edgeStatusMap.keySet()){
+            List<EdgeSource> sources = edgeSourceRepository.findBySourceId(Integer.parseInt(key));
             if(!sources.isEmpty()) {
                 EdgeSource source = sources.get(0);
                 //if (res.stream().filter((x) -> x.getName().equals(source.getEdge().getName())).count() > 0) {

@@ -26,7 +26,7 @@ public class SharedMemory {
         return new EdgeStatus(engineTimeStamp);
     }
 
-    public Map<Integer, LocalDateTime> edgeStatusMap = new HashMap<>();
+    public Map<String, LocalDateTime> edgeStatusMap = new HashMap<>();
     //endregion
 
 

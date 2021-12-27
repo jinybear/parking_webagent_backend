@@ -2,9 +2,9 @@ package Nuricon.parking_webagent_backend.util;
 
 import Nuricon.parking_webagent_backend.domain.User;
 import Nuricon.parking_webagent_backend.service.UserService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -20,6 +20,8 @@ public class JwtUtil {
     private UserService userService;
 
     private String secret = "secret";
+
+    private Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
     public String extractName(String token){
         return extractClaim(token, Claims::getSubject);
@@ -50,15 +52,8 @@ public class JwtUtil {
         claims.put("userid", user.getUserid());
         claims.put("uuid", user.getId());
         Map<String, String> res = new HashMap<>();
-        res.put("access_token", createToken(claims, userId, expired)); // 30 min
-        res.put("refresh_token", createToken(claims, userId, 1000 * 60 * 60 * 24 * 7));  // 1 week
-
-        return res;
-    }
-
-    public String generateToken(String userId) {
-        Map<String, Object> claims = new HashMap<>();
-        String res = createToken(claims, userId, 1000 * 60 * 60 * 10);  // 10 hours
+        res.put("access_token", createToken(claims, userId, expired));
+        res.put("refresh_token", createToken(claims, userId, 1000 * 60 * 60 * 24 * 14));  // 2 week
 
         return res;
     }
@@ -66,12 +61,28 @@ public class JwtUtil {
     private String createToken(Map<String, Object> claims, String subject, int expiredTime) {
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiredTime))
-                //.setExpiration(new Date(System.currentTimeMillis() + 10000))
                 .signWith(SignatureAlgorithm.HS256, secret).compact();
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-        final String name = extractName(token);
-        return (name.equals(userDetails.getUsername()) && !isTokenExpired(token));
+//        final String name = extractName(token);
+//        return (name.equals(userDetails.getUsername()) && !isTokenExpired(token));
+
+        try{
+            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+            return true;
+        } catch (SignatureException e) {
+            logger.warn("Invalid JWT signature: {}", e.getMessage());
+        } catch (MalformedJwtException e) {
+            logger.warn("Invalid JWT token: {}", e.getMessage());
+        } catch (ExpiredJwtException e) {
+            logger.warn("JWT token is expired: {}", e.getMessage());
+        } catch (UnsupportedJwtException e) {
+            logger.warn("JWT token is unsupported: {}", e.getMessage());
+        } catch (IllegalArgumentException e) {
+            logger.warn("JWT claims string is empty: {}", e.getMessage());
+        }
+
+        return false;
     }
 }

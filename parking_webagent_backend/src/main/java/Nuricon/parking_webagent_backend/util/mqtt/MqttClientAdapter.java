@@ -45,6 +45,7 @@ public class MqttClientAdapter implements MqttCallbackExtended {
     public void connectComplete(boolean reconnect, String serverURI) {
         try {
             for(String topic: this.topics){
+                logger.debug("Subscribe [" + topic + "] from " + serverURI);
                 this._client.subscribe(topic, 1, (tpic, msg) -> this.strategy.processMessage(tpic, msg));
             }
         } catch (MqttException e) {

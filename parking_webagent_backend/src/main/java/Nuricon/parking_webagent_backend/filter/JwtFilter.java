@@ -2,7 +2,6 @@ package Nuricon.parking_webagent_backend.filter;
 
 import Nuricon.parking_webagent_backend.service.UserService;
 import Nuricon.parking_webagent_backend.util.JwtUtil;
-import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
@@ -29,25 +27,29 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                                     FilterChain filterChain) throws ServletException, IOException {
-        String authorizationHeader = httpServletRequest.getHeader("Authorization");
-        String token = null;
-        String userId = null;
+        try {
+            String authorizationHeader = httpServletRequest.getHeader("Authorization");
+            String token = null;
+            String userId = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            token = authorizationHeader.substring(7);
-            userId = jwtUtil.extractName(token);
-        }
-
-        if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userService.loadUserByUsername(userId);
-
-            if (jwtUtil.validateToken(token, userDetails)) {
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken
-                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                token = authorizationHeader.substring(7);
+                userId = jwtUtil.extractName(token);
             }
+
+            if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = userService.loadUserByUsername(userId);
+
+                if (jwtUtil.validateToken(token, userDetails)) {
+                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    usernamePasswordAuthenticationToken
+                            .setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                }
+            }
+        } catch (Exception e) {
+            logger.error("Cannot set user authentication: {}", e);
         }
 
         filterChain.doFilter(httpServletRequest, httpServletResponse);
