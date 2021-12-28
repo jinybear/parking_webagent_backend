@@ -22,6 +22,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.AccountLockedException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -143,14 +144,16 @@ public class UserController {
             String notExistId = messageSource.getMessage("error.NotExistID", null, Locale.KOREA);
             // 로그인 실패
             logService.write(String.format("Login 실패 - [%s], 존재하지 않는 계정", userId), LogLevel.Information, request.getRemoteAddr());
-
             return notExistId;
-
         } catch(IllegalAccessException ex){
             response.setStatus(404);
             // 로그인 실패
             logService.write(String.format("Login 실패 - [%s], 해당계정 잠김 또는 패스워드 오류", userId), LogLevel.Information, request.getRemoteAddr());
-
+            return ex.getMessage();
+        } catch(UserService.AccountLockedException ex) {
+            response.setStatus(404);
+            // 잠금 처리
+            logService.write(String.format("Login 실패 - [%s], 3회 연속 실패로 잠금처리", userId), LogLevel.Information, request.getRemoteAddr());
             return ex.getMessage();
         }
 
@@ -158,7 +161,7 @@ public class UserController {
                 new UsernamePasswordAuthenticationToken(userId, form.getPassword())
         );
 
-        Map<String, String> tokens = jwtUtil.generateTokens(userId, token_validation);  // 10min
+        Map<String, String> tokens = jwtUtil.generateTokens(userId, token_validation/10);  // 10min
         String token = new ObjectMapper().writeValueAsString(tokens);
         userService.updateRefreshToken(userId, tokens.get("refresh_token"));
 
@@ -172,16 +175,13 @@ public class UserController {
     @ResponseBody
     public String logout(HttpServletRequest httpServletRequest) {
         // refreshToken 제거
-        String authorizationHeader = httpServletRequest.getHeader("Authorization");
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            String token = authorizationHeader.substring(7);
-            String userId = jwtUtil.extractName(token);
-//            HttpSession session = httpServletRequest.getSession();
-//            session.removeAttribute("access-token");
-//            session.removeAttribute("request-token");
-
-            userService.logout(userId);
-        }
+//        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+//        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+//            String token = authorizationHeader.substring(7);
+//            String userId = jwtUtil.extractName(token);
+//
+//            userService.logout(userId);
+//        }
 
         return "OK";
     }
