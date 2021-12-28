@@ -34,4 +34,10 @@ public class ParkingLiveController {
     public List<Integer> outParkingLive(String areaId){
         return parkingLiveService.outParkingLive(areaId);
     }
+
+    @PostMapping("/api/cameraOutParking")
+    @ResponseBody
+    public int cameraOutParking(String sourceId){
+        return parkingLiveService.cameraOutParking(sourceId);
+    }
 }

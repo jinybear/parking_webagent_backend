@@ -1,14 +1,14 @@
 package Nuricon.parking_webagent_backend.service;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import Nuricon.parking_webagent_backend.VO.ParkingLiveVO;
-import Nuricon.parking_webagent_backend.domain.OutStatistics;
-import Nuricon.parking_webagent_backend.domain.Source;
-import Nuricon.parking_webagent_backend.domain.Statistics;
+import Nuricon.parking_webagent_backend.domain.*;
 import Nuricon.parking_webagent_backend.repository.OutStatisticsRepository;
+import Nuricon.parking_webagent_backend.repository.OutsidesRepository;
 import Nuricon.parking_webagent_backend.repository.SourceRepository;
 import Nuricon.parking_webagent_backend.repository.StatisticsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,8 @@ public class ParkingLiveService {
     private StatisticsRepository statisticsRepository;
     @Autowired
     private OutStatisticsRepository outStatisticsRepository;
+    @Autowired
+    private OutsidesRepository outsidesRepository;
 
     //메인메뉴 리스트 -> 라이브 소분류
     public List<Source> sourceKey(){
@@ -79,7 +81,7 @@ public class ParkingLiveService {
         }
         //System.out.println(_illegalParkingAreaCount + "중복 데이터 제거한 불법 주차 구역 개수");
         List<OutStatistics> _illegalParkingStayList = outStatistics.stream().filter(x -> x.getParkingCount() != 0).collect(Collectors.toList());
-        //ystem.out.println(_illegalParkingStayList + "불법주차 차량이 있는 불법 주차 구역 리스트");
+        //System.out.println(_illegalParkingStayList + "불법주차 차량이 있는 불법 주차 구역 리스트");
 
         Integer _illegalParkingStayCount = _illegalParkingStayList.stream().map(x -> x.getParkingCount()).reduce(0, (prev, cur) -> prev + cur);
         //System.out.println(_illegalParkingStayCount + "불법 주차 차량 개수");
@@ -89,4 +91,18 @@ public class ParkingLiveService {
         return illegalParking;
     }
 
+    //카메라별 감시 대상 불법 주차 구역 개수
+    public int cameraOutParking(String sourceId){
+        int _sourceId = Integer.valueOf(sourceId);
+        List<Outsides> _sideZone = outsidesRepository.findBySourceId(_sourceId);
+        List<Integer> outParkingList = new ArrayList<Integer>();
+        for (Outsides outsides : _sideZone){
+            for(Sidezones sidezones : outsides.getSidezones()){
+                Integer _cameraOutParkingCount = Integer.valueOf(sidezones.getSidezoneId());
+                outParkingList.add(_cameraOutParkingCount);
+            }
+        }
+        int outParkingCount = outParkingList.size();
+        return outParkingCount;
+    }
 }
