@@ -79,7 +79,7 @@ public class UserService implements UserDetailsService {
             User user = getUserFromId(uid);
             user.setLocked(false);
 
-            logService.write(String.format("계정 잠금 해제 - [%s]", uid), LogLevel.Information, null);
+            logService.write(String.format("계정 잠금 해제 - [%s]", user.getUserid()), LogLevel.Information, null);
         }
     }
 
