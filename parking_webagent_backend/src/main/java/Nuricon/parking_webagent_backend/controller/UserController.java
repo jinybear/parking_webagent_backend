@@ -94,7 +94,7 @@ public class UserController {
 
     @ApiOperation(value="This method is used to change password")
     @PostMapping("/api/user/changeMyPassword")
-    public String changeMyPassword(HttpServletResponse response, @RequestBody Map<String, String> params)throws JsonProcessingException{
+    public String changeMyPassword(HttpServletResponse response, @RequestBody Map<String, String> params) {
         System.out.println(params);
         String uuid=params.get("id");
         String nowpassword = params.get("nowpassword");
@@ -161,7 +161,7 @@ public class UserController {
                 new UsernamePasswordAuthenticationToken(userId, form.getPassword())
         );
 
-        Map<String, String> tokens = jwtUtil.generateTokens(userId, token_validation/10);  // 10min
+        Map<String, String> tokens = jwtUtil.generateTokens(userId, token_validation);  // 10min
         String token = new ObjectMapper().writeValueAsString(tokens);
         userService.updateRefreshToken(userId, tokens.get("refresh_token"));
 
