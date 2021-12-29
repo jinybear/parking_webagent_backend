@@ -47,7 +47,7 @@ public class ParkingLiveService {
         List<Integer> _totalSectorId = _statistic.stream().map(x->x.getSectorId()).distinct().collect(Collectors.toList());
         //System.out.println(_totalSectorId + "깽꺵이발");
 
-        List<ParkingLiveVO> _parkingVo = new ArrayList<ParkingLiveVO>();
+        List<ParkingLiveVO> _parkingVo = new ArrayList<>();
         //구역별 정보 리스트 생성
         for(int sectId : _totalSectorId){
             ParkingLiveVO _parkingLiveVO = new ParkingLiveVO();
@@ -73,18 +73,8 @@ public class ParkingLiveService {
         LocalDateTime _date = LocalDateTime.now().withSecond(0).withNano(0);
 //        LocalDateTime _date = LocalDateTime.of(2021,12,19,00,00,00);
         List<OutStatistics> outStatistics = outStatisticsRepository.findByAreaIdAndDateGreaterThanEqual(_areaId, _date);
-
-        //System.out.println(outStatistics + "주차장별 불법 주차 구역 리스트");
-        Integer _illegalParkingAreaCount = (int)(long)outStatistics.stream().map(x -> x.getSourceId()).distinct().count() -1; //불법 주차 구역 개수
-        if(_illegalParkingAreaCount == -1){
-            _illegalParkingAreaCount = 0;
-        }
-        //System.out.println(_illegalParkingAreaCount + "중복 데이터 제거한 불법 주차 구역 개수");
-        List<OutStatistics> _illegalParkingStayList = outStatistics.stream().filter(x -> x.getParkingCount() != 0).collect(Collectors.toList());
-        //System.out.println(_illegalParkingStayList + "불법주차 차량이 있는 불법 주차 구역 리스트");
-
-        Integer _illegalParkingStayCount = _illegalParkingStayList.stream().map(x -> x.getParkingCount()).reduce(0, (prev, cur) -> prev + cur);
-        //System.out.println(_illegalParkingStayCount + "불법 주차 차량 개수");
+        Integer _illegalParkingAreaCount = (int)outStatistics.stream().filter((f)-> f.getSourceId()!=0).map(x -> x.getSourceId()).distinct().count(); //불법 주차 구역 개수
+        Integer _illegalParkingStayCount  = outStatistics.stream().filter(x -> x.getSourceId() == 0).map((m)->m.getParkingCount()).findFirst().get(); //불법 주차 차량 대수
         List<Integer> illegalParking = new ArrayList<>();
         illegalParking.add(_illegalParkingAreaCount);
         illegalParking.add(_illegalParkingStayCount);
