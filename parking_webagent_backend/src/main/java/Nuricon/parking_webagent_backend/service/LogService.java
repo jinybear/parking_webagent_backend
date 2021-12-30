@@ -5,6 +5,7 @@ import Nuricon.parking_webagent_backend.repository.LogRepository;
 import Nuricon.parking_webagent_backend.util.enums.LogLevel;
 import Nuricon.parking_webagent_backend.util.enums.Role;
 import Nuricon.parking_webagent_backend.util.mqtt.MqttClientAdapter;
+import lombok.Builder;
 import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -4,6 +4,7 @@ import Nuricon.parking_webagent_backend.domain.RefreshToken;
 import Nuricon.parking_webagent_backend.domain.User;
 import Nuricon.parking_webagent_backend.repository.RefreshTokenRepository;
 import Nuricon.parking_webagent_backend.repository.UserRepository;
+import Nuricon.parking_webagent_backend.util.enums.LogLevel;
 import Nuricon.parking_webagent_backend.util.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -20,6 +21,12 @@ import java.util.*;
 @Transactional
 @Service
 public class UserService implements UserDetailsService {
+    public class AccountLockedException extends Exception  {
+        public AccountLockedException(String message) {
+            super(message);
+        }
+    }
+
     @Autowired
     private UserRepository userRepo;
     @Autowired
@@ -28,6 +35,8 @@ public class UserService implements UserDetailsService {
     private MessageSource messageSource;
     @Autowired
     private PasswordEncoder pe;
+    @Autowired
+    private LogService logService;
 
     public User getUser(String userId) throws NoSuchElementException {
         Optional<User> optionalUser = userRepo.findByUserid(userId);
@@ -69,6 +78,8 @@ public class UserService implements UserDetailsService {
             long uid = Long.parseLong(ids.get(i));
             User user = getUserFromId(uid);
             user.setLocked(false);
+
+            logService.write(String.format("계정 잠금 해제 - [%s]", user.getUserid()), LogLevel.Information, null);
         }
     }
 
@@ -112,6 +123,7 @@ public class UserService implements UserDetailsService {
     }
 
     // User의 failureCnt column의 값을 증가시키고 특정 값 이상이면 locked column을 true로 전환하는 함수(실패횟수 카운트해서 잠금처리용)
+
     public void countFailure(String userId) {
         Optional<User> optionalUser = userRepo.findByUserid(userId);
         if (optionalUser.isPresent()) {
@@ -132,7 +144,7 @@ public class UserService implements UserDetailsService {
     }
 
     // 입력받은 ID, password에 대해 DB에 없거나 password가 틀린경우에 대한 처리
-    public void checkIdAndPassword(String userId, String password) throws IllegalAccessException {
+    public void checkIdAndPassword(String userId, String password) throws IllegalAccessException, AccountLockedException {
         if (getlocked(userId)) {
             String msg = messageSource.getMessage("error.Locked", null, Locale.getDefault());
             System.out.println(msg);
@@ -142,7 +154,6 @@ public class UserService implements UserDetailsService {
         UserDetails user = loadUserByUsername(userId);
 
         String encodedPW = pe.encode(password);
-        System.out.println(user.getPassword());
         boolean passwordIsCorrect = pe.matches(password, user.getPassword());
         if (!passwordIsCorrect) {
             if (userRepo.findByUserid(userId).get().getRole().equals(Role.ROLE_SUPERADMIN)) {
@@ -152,9 +163,10 @@ public class UserService implements UserDetailsService {
 
             //실패 카운트
             countFailure(userId);
+
             if (getlocked(userId)) {
-                String failureCnt = messageSource.getMessage("error.FailureCnt", null, LocaleContextHolder.getLocale());
-                throw new IllegalAccessException(failureCnt);
+                String msg = messageSource.getMessage("error.FailureCnt", null, LocaleContextHolder.getLocale());
+                throw new AccountLockedException(msg);
             } else {
                 String msg = messageSource.getMessage("error.BadCredentials", null, LocaleContextHolder.getLocale());
                 throw new IllegalAccessException(msg);

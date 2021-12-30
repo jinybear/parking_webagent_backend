@@ -50,9 +50,11 @@ public class UpdateSharedMemory {
         if (this.client == null)
             return;
 
+        String url = constructorYml.getDataManager().getUrl();
         String uri = constructorYml.getDataManager().getUri();
 
         try {
+            logger.debug(String.format("Try to requestSourceInfo [%s/%s]", url, uri));
             // 수집한 sourceIDs 는 어떻게?
             String res = client.post()
                     .uri(uri)
@@ -62,12 +64,15 @@ public class UpdateSharedMemory {
                     .retrieve()
                     .bodyToMono(String.class).block();
 
-            logger.debug("[" + LocalDateTime.now() + "]" + " res : " + res);
+            logger.debug("ResponseSourceInfo data : " + res);
 
             synchronized (this){
                 sharedMemory.dataManagerInfersources = res;
             }
+            logger.debug("Update dataManagerInfersource : " + sharedMemory.dataManagerInfersources);
+
         } catch(Exception e) {
+            logger.error("Failed to request");
             logger.warn(e.getMessage());
         }
     }
