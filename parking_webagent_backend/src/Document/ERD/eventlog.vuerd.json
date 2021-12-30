@@ -1,0 +1,198 @@
+{
+  "canvas": {
+    "version": "2.2.10",
+    "width": 2000,
+    "height": 2000,
+    "scrollTop": -2,
+    "scrollLeft": 0,
+    "zoomLevel": 1,
+    "show": {
+      "tableComment": true,
+      "columnComment": true,
+      "columnDataType": true,
+      "columnDefault": true,
+      "columnAutoIncrement": false,
+      "columnPrimaryKey": true,
+      "columnUnique": false,
+      "columnNotNull": true,
+      "relationship": true
+    },
+    "database": "MySQL",
+    "databaseName": "",
+    "canvasType": "ERD",
+    "language": "GraphQL",
+    "tableCase": "pascalCase",
+    "columnCase": "camelCase",
+    "highlightTheme": "VS2015",
+    "bracketType": "none",
+    "setting": {
+      "relationshipDataTypeSync": true,
+      "relationshipOptimization": false,
+      "columnOrder": [
+        "columnName",
+        "columnDataType",
+        "columnNotNull",
+        "columnUnique",
+        "columnAutoIncrement",
+        "columnDefault",
+        "columnComment"
+      ]
+    },
+    "pluginSerializationMap": {}
+  },
+  "table": {
+    "tables": [
+      {
+        "name": "log",
+        "comment": "시스템 운영상 이벤트 로그 관리",
+        "columns": [
+          {
+            "name": "id",
+            "comment": "",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "614b7060-aae0-434f-8975-532ae3c8273b"
+          },
+          {
+            "name": "created_at",
+            "comment": "생성시간",
+            "dataType": "DATETIME",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 62.49951171875,
+              "widthComment": 60,
+              "widthDataType": 62.6328125,
+              "widthDefault": 60
+            },
+            "id": "9ebb44f3-84fa-4487-a848-2f803a8ffc00"
+          },
+          {
+            "name": "description",
+            "comment": "설명",
+            "dataType": "VARCHAR",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 67.14599609375,
+              "widthComment": 60,
+              "widthDataType": 60.88720703125,
+              "widthDefault": 60
+            },
+            "id": "2b0f50de-6899-4efc-804d-30a21acb71b7"
+          },
+          {
+            "name": "src_ipaddress",
+            "comment": "출처 ip",
+            "dataType": "VARCHAR",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 80.1396484375,
+              "widthComment": 60,
+              "widthDataType": 60.88720703125,
+              "widthDefault": 60
+            },
+            "id": "c2d75663-7dc7-4581-9370-d4a25b577372"
+          },
+          {
+            "name": "level",
+            "comment": "",
+            "dataType": "ENUM",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "31591b5c-39b5-4c74-b7e8-3ad1a329b688"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 130,
+          "top": 97,
+          "zIndex": 2,
+          "widthName": 60,
+          "widthComment": 120
+        },
+        "visible": true,
+        "id": "330196bc-b3f8-4c95-92d3-e7f0c61f70d0"
+      }
+    ],
+    "indexes": []
+  },
+  "memo": {
+    "memos": [
+      {
+        "value": "시스템 운영 중 기록해야 하는 log 들을 담는 table\n\n생성시간, 내용, 출처주소, 로그 레벨\n\nenum [로그레벨] = {\n    None : 0\n    Debug : 1\n    Information : 2\n    Warning : 3\n    Error : 4\n    Critical : 5    \n}",
+        "ui": {
+          "active": false,
+          "left": 523,
+          "top": 167,
+          "zIndex": 1,
+          "width": 305,
+          "height": 243
+        },
+        "id": "5ea02092-d7b8-42fb-98c2-510f517f54f6"
+      }
+    ]
+  },
+  "relationship": {
+    "relationships": []
+  }
+}

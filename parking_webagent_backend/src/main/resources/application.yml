@@ -1,16 +1,17 @@
 logging:
   level:
-    root: warn
+    root: WARN  #( TRACT > DEBUG > INFO > WARN > ERROR > FATAL > OFF )
 
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3306/springdb
+    url: jdbc:mariadb://192.168.0.151:3306/springdb
     driverClassName: org.mariadb.jdbc.Driver
     username: root
     password: dlsekdtlqdjrdnjs
   jpa:
     hibernate:
       ddl-auto: none
+      use-new-id-generator-mapping: false
     show-sql: true
     properties:
       hibernate:
@@ -20,11 +21,30 @@ spring:
   data:
     mongodb:
       host: 34.64.151.162
+#      host: localhost
       port: 27017
       database: parkingflex
       authentication-database: parkingflex
       username: parkingflex
       password: tkaqorclf
-
   profiles:
     active: local
+#  messages:
+#    always-use-message-format: false # Set whether to always apply the MessageFormat rules, parsing even messages without arguments.
+#    basename: messages # Comma-separated list of basenames, each following the ResourceBundle convention.
+#    cache-seconds: -1  # Loaded resource bundle files cache expiration, in seconds. When set to -1, bundles are cached forever.
+#    encoding: UTF-8  # Message bundles encoding.
+#    fallback-to-system-locale: true # Set whether to fall back to the system Locale if no files for a specific Locale have been found.
+
+
+external:
+  mqtt:
+    enable: true
+    urls: tcp://192.168.0.225:1883
+  dataManager:
+    enable: true
+    url: http://192.168.0.225:9090
+    uri: outdoorparking/manager/parkconfig/infersources
+
+
+
