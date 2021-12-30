@@ -154,7 +154,6 @@ public class UserService implements UserDetailsService {
         UserDetails user = loadUserByUsername(userId);
 
         String encodedPW = pe.encode(password);
-        System.out.println(user.getPassword());
         boolean passwordIsCorrect = pe.matches(password, user.getPassword());
         if (!passwordIsCorrect) {
             if (userRepo.findByUserid(userId).get().getRole().equals(Role.ROLE_SUPERADMIN)) {
