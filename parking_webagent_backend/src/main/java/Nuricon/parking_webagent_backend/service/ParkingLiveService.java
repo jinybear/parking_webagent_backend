@@ -41,11 +41,9 @@ public class ParkingLiveService {
         LocalDateTime _date = LocalDateTime.now().withSecond(0).withNano(0);
 //        LocalDateTime _date = LocalDateTime.of(2021,11,10,00,00,00);
         List<Statistics> _statistic = statisticsRepository.findByAreaIdAndDateGreaterThanEqual(_areaId, _date);
-        //System.out.println(_statistic + "룰루");
 
         //주차장 구역 리스트 생성
         List<Integer> _totalSectorId = _statistic.stream().map(x->x.getSectorId()).distinct().collect(Collectors.toList());
-        //System.out.println(_totalSectorId + "깽꺵이발");
 
         List<ParkingLiveVO> _parkingVo = new ArrayList<>();
         //구역별 정보 리스트 생성
@@ -72,11 +70,20 @@ public class ParkingLiveService {
         int _areaId = Integer.valueOf(areaId);
         LocalDateTime _date = LocalDateTime.now().withSecond(0).withNano(0);
 //        LocalDateTime _date = LocalDateTime.of(2021,12,19,00,00,00);
-        List<OutStatistics> outStatistics = outStatisticsRepository.findByAreaIdAndDateGreaterThanEqual(_areaId, _date);
-        Integer _illegalParkingAreaCount = (int)outStatistics.stream().filter((f)-> f.getSourceId()!=0).map(x -> x.getSourceId()).distinct().count(); //불법 주차 구역 개수
+        List<OutStatistics> outStatistics = outStatisticsRepository.findByAreaIdAndDateGreaterThanEqual(_areaId, _date); //불법 주차 차량 대수 구하기 위한 list
         Integer _illegalParkingStayCount  = outStatistics.stream().filter(x -> x.getSourceId() == 0).map((m)->m.getParkingCount()).findFirst().get(); //불법 주차 차량 대수
+        //불법 주차 구역 개수
+        List<Outsides> _illegalParkingAreaList = outsidesRepository.findAll(); //모든 불법 주차 카메라 리스트
+        List<Outsides> _illegalParkingAreaIDList = _illegalParkingAreaList.stream().filter(x -> x.getSourceId().startsWith(areaId)).collect(Collectors.toList()); //해당 주차장 불법 주차 카메라 리스트
+        List<Integer> _illegalParkingAreaCount = new ArrayList<>();
+        for(Outsides outsides : _illegalParkingAreaIDList){
+            for(Sidezones sidezones : outsides.getSidezones()){
+                _illegalParkingAreaCount.add(sidezones.getSidezoneId());
+            }
+        }
+
         List<Integer> illegalParking = new ArrayList<>();
-        illegalParking.add(_illegalParkingAreaCount);
+        illegalParking.add(_illegalParkingAreaCount.size());
         illegalParking.add(_illegalParkingStayCount);
         return illegalParking;
     }
